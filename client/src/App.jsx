@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import useAuthCheck from "./hooks/authCheck";
 import OnBoardPage from "./pages/onBoard";
 import { Toaster } from "react-hot-toast";
+import Layout from "./components/Layout";
 function App() {
   const { authUser, isLoading } = useAuthCheck();
   const isAuthenticated = Boolean(authUser);
@@ -27,7 +28,9 @@ function App() {
           element={
             isAuthenticated ? (
               isOnBoarded ? (
-                <HomePage />
+                <Layout>
+                  <HomePage />
+                </Layout>
               ) : (
                 <Navigate to={"/onboard"} />
               )
@@ -38,7 +41,13 @@ function App() {
         />
         <Route
           path="/login"
-          element={!isAuthenticated ? <LoginPage /> : <Navigate to="/" />}
+          element={
+            !isAuthenticated ? (
+              <LoginPage />
+            ) : (
+              <Navigate to={isOnBoarded ? "/onboard" : "/"} />
+            )
+          }
         />
         <Route
           path="/register"

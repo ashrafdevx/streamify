@@ -12,12 +12,22 @@ export const login = async (loginUser) => {
 
 // AuthCheck Function
 export const authCheck = async () => {
-  const res = await InstanceAxios.get("/auth/me");
-  return res.data;
+  try {
+    const res = await InstanceAxios.get("/auth/me");
+    return res.data;
+  } catch (error) {
+    return null;
+  }
 };
 
 // Onboard User
 export const completeOnboarding = async (formState) => {
   const respnse = await InstanceAxios.put("/auth/onboarding", formState);
   return respnse.data;
+};
+
+// Logout
+export const logoutMutate = async () => {
+  const response = await InstanceAxios.post("/auth/logout");
+  return response.data;
 };

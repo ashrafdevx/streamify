@@ -22,15 +22,12 @@ const RegisterPage = () => {
   };
   return (
     <div
-      className="flex border-2 min-h-screen items-center justify-center border-white p-5"
-      data-theme="light"
+      className="h-screen flex items-center justify-center p-4 sm:p-6 md:p-8"
+      data-theme="forest"
     >
-      <div
-        className="max-w-5xl w-full flex border p-5 rounded-xl border-primary/25 bg-base-100"
-        data-theme="forest"
-      >
+      <div className="border border-primary/25 flex flex-col lg:flex-row w-full max-w-5xl mx-auto bg-base-100 rounded-xl shadow-lg overflow-hidden">
         {/* Right Side */}
-        <div className="w-full lg:w-1/2 flex flex-col space-y-4">
+        <div className="w-full lg:w-1/2 p-4 sm:p-8 flex flex-col">
           <form className="w-full space-y-3" onSubmit={hanldleRegister}>
             <Logo />
 
