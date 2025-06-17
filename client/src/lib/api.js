@@ -31,3 +31,26 @@ export const logoutMutate = async () => {
   const response = await InstanceAxios.post("/auth/logout");
   return response.data;
 };
+
+// getOutgoingFriendReqs
+export const getOutgoingFriendReqs = async () => {
+  const resonse = await InstanceAxios.get("/outgoing-friend-requests");
+  return resonse?.data;
+};
+
+// getRecommendedUsers
+export const getRecommendedUsers = async () => {
+  try {
+    const response = await InstanceAxios.get("/recommend");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching recommended users:", error.message);
+    throw error;
+  }
+};
+
+// Send Freind Request
+export const sendFriendRequest = async (id) => {
+  const response = await InstanceAxios.post(`/friendsrequest/${id}`);
+  return response.data;
+};

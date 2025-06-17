@@ -5,13 +5,14 @@ export const RecommendedUsers = async (req, res) => {
   try {
     const { _id: currentUserId } = req.user;
     const currentUser = req.user;
+
     const recommendUser = await User.find({
       $and: [
         { _id: { $ne: currentUserId } }, //exclude current friend user
-        { _id: { $nin: currentUser.friend } }, //exclude current friend user
+        { _id: { $nin: currentUser.friends } }, //exclude current friend user
         { isOnBoard: true }, //
       ],
-    });
+    }).select("-password");
     res.status(200).json(recommendUser);
   } catch (error) {
     console.error("Recommneded Controller", error.message);
@@ -120,8 +121,9 @@ export const AcceptFriendRequest = async (req, res) => {
 // Get Friend Request
 
 export const getFriendRequest = async (req, res) => {
+  console.log("req.user._id", req.user._id);
   try {
-    const incomingRequest = await User.FriendRequest({
+    const incomingRequest = await FriendRequest.find({
       recipient: req.user._id,
       status: "pending",
     }).populate(
@@ -129,7 +131,7 @@ export const getFriendRequest = async (req, res) => {
       "fullname nanativeLanguage  learningLanguage profilePic"
     );
 
-    const acceptRequest = await User.FriendRequest({
+    const acceptRequest = await FriendRequest.find({
       recipient: req.user._id,
       status: "accepted",
     }).populate("recipient", "fullname profilePic");
@@ -143,16 +145,17 @@ export const getFriendRequest = async (req, res) => {
 
 // out Going friend request
 export const outgoingFriendRequest = async (req, res) => {
+  console.log(req.user._id);
   try {
-    const outgoingRequest = await User.FriendRequest({
-      recipient: req.user._id,
+    const outgoingRequest = await FriendRequest.find({
+      sender: req.user._id,
       status: "pending",
     }).populate(
-      "sender",
+      "recipient",
       "fullname nanativeLanguage  learningLanguage profilePic"
     );
 
-    return res.json({ outgoingRequest });
+    return res.json(outgoingRequest);
   } catch (error) {
     console.error("outgoingFriendRequest Controller", error.message);
     res.status(500).json({ message: "Server error" });

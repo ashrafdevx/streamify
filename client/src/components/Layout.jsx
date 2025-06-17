@@ -9,12 +9,8 @@ const Layout = ({ children }) => {
   return (
     <div className="flex bg-base-100 min-h-screen" data-theme={theme}>
       <SideBar />
-      <div className="flex flex-col flex-1 border-white border-2">
-        <div className=" border-white border-2">
-          {" "}
-          <Navbar />{" "}
-        </div>
-        <div className="  border-white border-2">{children}</div>
+      <div className="flex flex-col flex-1">
+        <Navbar /> {children}
       </div>
     </div>
   );

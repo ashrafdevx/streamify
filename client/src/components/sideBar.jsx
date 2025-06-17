@@ -12,7 +12,6 @@ import { Link, useLocation } from "react-router";
 
 export const SideBar = () => {
   const { authUser } = useAuthCheck();
-  console.log(authUser);
   const location = useLocation();
   const currentPath = location.pathname;
   return (
