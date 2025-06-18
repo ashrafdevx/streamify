@@ -7,6 +7,8 @@ import useAuthCheck from "./hooks/authCheck";
 import OnBoardPage from "./pages/onBoard";
 import { Toaster } from "react-hot-toast";
 import Layout from "./components/Layout";
+import NotificationPage from "./pages/NotificationPage";
+import Friends from "./pages/Friends";
 function App() {
   const { authUser, isLoading } = useAuthCheck();
   const isAuthenticated = Boolean(authUser);
@@ -39,6 +41,7 @@ function App() {
             )
           }
         />
+
         <Route
           path="/login"
           element={
@@ -46,6 +49,23 @@ function App() {
               <LoginPage />
             ) : (
               <Navigate to={isOnBoarded ? "/onboard" : "/"} />
+            )
+          }
+        />
+        {/* friends */}
+        <Route
+          path="/friends"
+          element={
+            isAuthenticated ? (
+              isOnBoarded ? (
+                <Layout>
+                  <Friends />
+                </Layout>
+              ) : (
+                <Navigate to={"/onboard"} />
+              )
+            ) : (
+              <Navigate to={!isAuthenticated ? "/login" : "/friends"} />
             )
           }
         />
@@ -60,6 +80,23 @@ function App() {
               <OnBoardPage />
             ) : (
               <Navigate to={"/"} />
+            )
+          }
+          // {/* NotificationPage */}
+        />
+        <Route
+          path="/notifications"
+          element={
+            isAuthenticated ? (
+              isOnBoarded ? (
+                <Layout>
+                  <NotificationPage />
+                </Layout>
+              ) : (
+                <Navigate to={"/onboard"} />
+              )
+            ) : (
+              <Navigate to={!isAuthenticated ? "/login" : "/onboard"} />
             )
           }
         />
